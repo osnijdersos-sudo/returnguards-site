@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#16233B"/>
+      <stop offset="1" stop-color="#0B1220"/>
+    </linearGradient>
+    <linearGradient id="shield" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#4ADE9F"/>
+      <stop offset="0.55" stop-color="#10B981"/>
+      <stop offset="1" stop-color="#047857"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="28"/>
+    </filter>
+  </defs>
+  <rect width="1024" height="1024" rx="232" fill="url(#bg)"/>
+  <g id="mark">
+    <path d="M512 176 C600 214 690 236 782 244 C788 470 760 640 512 852 C264 640 236 470 242 244 C334 236 424 214 512 176 Z" fill="#10B981" opacity="0.45" filter="url(#glow)"/>
+    <path d="M512 176 C600 214 690 236 782 244 C788 470 760 640 512 852 C264 640 236 470 242 244 C334 236 424 214 512 176 Z" fill="url(#shield)"/>
+    <path d="M512 176 C600 214 690 236 782 244 C784 330 780 400 768 460 C680 430 600 420 512 420 C424 420 344 430 256 460 C244 400 240 330 242 244 C334 236 424 214 512 176 Z" fill="url(#shine)"/>
+    <path d="M458 404 H570 A102 102 0 0 1 570 608 H452" fill="none" stroke="#FFFFFF" stroke-width="74" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M372 404 L470 330 L470 478 Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="22" stroke-linejoin="round"/>
+  </g>
+</svg>
