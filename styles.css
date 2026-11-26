@@ -312,6 +312,24 @@ table.compare thead th { font-size: .8rem; text-transform: uppercase; letter-spa
 .cta-band .store-badge { background: #fff; color: var(--ink); }
 .cta-band .store-badge svg path { fill: var(--ink); }
 
+/* Signup */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.signup { display: flex; gap: 10px; max-width: 520px; flex-wrap: wrap; }
+.signup input { flex: 1 1 240px; min-width: 0; padding: 16px 18px; border-radius: 14px; border: 1px solid rgba(255,255,255,.2); background: rgba(255,255,255,.08); color: #fff; font: inherit; font-size: 1.02rem; }
+.signup input::placeholder { color: #94a3b8; }
+.signup input:focus { outline: none; border-color: var(--green-2); box-shadow: 0 0 0 4px rgba(52,211,153,.25); }
+.signup-note { font-size: .88rem !important; color: #94a3b8 !important; margin: 10px 0 0 !important; }
+.signup-note.ok { color: var(--green-2) !important; font-weight: 700; }
+.signup-note.err { color: #fca5a5 !important; }
+.film-unmute {
+  position: absolute; left: 50%; bottom: 28px; transform: translateX(-50%); display: none; align-items: center; gap: 8px;
+  padding: 10px 16px; border-radius: 999px; border: 0; cursor: pointer; font: inherit; font-weight: 700; font-size: .92rem;
+  color: #fff; background: rgba(11,18,32,.72); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+}
+.film-frame.preview .film-play { opacity: 0; pointer-events: none; }
+.film-frame.preview .film-unmute { display: inline-flex; animation: pulse-pill 2.4s ease-in-out infinite; }
+@keyframes pulse-pill { 50% { box-shadow: 0 0 0 8px rgba(16,185,129,.25); } }
+
 /* Docs (legal / support) */
 .doc { max-width: 780px; margin: 0 auto; padding: 72px 24px 104px; }
 .doc h1 { font-size: 2.6rem; }
@@ -367,6 +385,7 @@ footer .legal { grid-column: 1 / -1; border-top: 1px solid #1e293b; padding-top:
   .plans { grid-template-columns: 1fr; }
   .cta-band { grid-template-columns: 1fr; padding: 52px 28px; text-align: center; }
   .cta-band .hero-actions { justify-content: center; }
+  .cta-band .signup { margin: 0 auto; }
   .cta-band .store-badges { flex-direction: row; justify-content: center; align-items: center; }
   footer .container { grid-template-columns: 1fr 1fr; }
   .nav-links { display: none; position: absolute; top: 70px; left: 0; right: 0; background: #fff; flex-direction: column; padding: 18px 24px 24px; border-bottom: 1px solid var(--line); gap: 16px; box-shadow: var(--shadow); }

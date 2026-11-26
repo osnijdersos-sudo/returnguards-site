@@ -1,3 +1,16 @@
+// Fill these in once the accounts exist; until then signup falls back to email.
+const CONFIG = {
+  buttondownUser: '',      // e.g. 'returnguard' -> posts to Buttondown's embed form
+  plausibleDomain: '',     // e.g. 'returnguards.com' -> loads Plausible analytics
+};
+
+if (CONFIG.plausibleDomain) {
+  const s = document.createElement('script');
+  s.defer = true; s.dataset.domain = CONFIG.plausibleDomain; s.src = 'https://plausible.io/js/script.js';
+  document.head.appendChild(s);
+}
+const track = (event) => { if (window.plausible) window.plausible(event); };
+
 // Mobile menu
 const toggle = document.querySelector('.menu-toggle');
 const links = document.querySelector('.nav-links');
@@ -70,14 +83,33 @@ if (money && !reduceMotion) {
 const film = document.getElementById('film-video');
 if (film) {
   const frame = film.closest('.film-frame');
+  let withSound = false;
   const play = () => {
+    withSound = true;
+    frame.classList.remove('preview');
+    film.loop = false;
     film.muted = false;
     film.controls = true;
     frame.classList.add('playing');
+    if (film.currentTime > 0 && film.dataset.previewed) film.currentTime = 0;
     film.play().catch(() => { film.muted = true; film.play(); });
+    track('Film played');
   };
   frame.querySelector('.film-play').addEventListener('click', play);
-  film.addEventListener('ended', () => { frame.classList.remove('playing'); film.controls = false; film.currentTime = 0; });
+  frame.querySelector('.film-unmute').addEventListener('click', play);
+  film.addEventListener('ended', () => { frame.classList.remove('playing'); film.controls = false; film.currentTime = 0; withSound = false; });
+  // A silent preview starts when the film scrolls into view (like a social feed).
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (withSound) { if (!e.isIntersecting) film.pause(); return; }
+        if (e.isIntersecting) {
+          film.muted = true; film.loop = true; film.dataset.previewed = '1';
+          film.play().then(() => frame.classList.add('preview')).catch(() => {});
+        } else film.pause();
+      });
+    }, { threshold: 0.5 }).observe(frame);
+  }
   document.querySelectorAll('.film-chapters [data-t]').forEach((li) => {
     const seek = () => { film.currentTime = parseFloat(li.dataset.t); play(); };
     li.addEventListener('click', seek);
@@ -107,5 +139,33 @@ document.querySelectorAll('[data-share]').forEach((button) => {
     } catch (_) {
       window.location.href = `mailto:?subject=${encodeURIComponent('You need this app')}&body=${encodeURIComponent(`${data.text} ${data.url}`)}`;
     }
+  });
+});
+
+// Early-access signup
+document.querySelectorAll('[data-signup]').forEach((form) => {
+  const note = form.parentElement.querySelector('[data-signup-note]');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = form.email.value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      note.textContent = 'Please enter a valid email address.'; note.className = 'signup-note err'; form.email.focus(); return;
+    }
+    const button = form.querySelector('button'); button.disabled = true;
+    if (CONFIG.buttondownUser) {
+      try {
+        await fetch(`https://buttondown.com/api/emails/embed-subscribe/${CONFIG.buttondownUser}`, { method: 'POST', mode: 'no-cors', body: new URLSearchParams({ email }) });
+        note.textContent = "You're on the list! We'll email you the moment ReturnGuard is live."; note.className = 'signup-note ok';
+        form.reset(); track('Signup');
+      } catch (_) {
+        note.textContent = 'Something went wrong. Please try again.'; note.className = 'signup-note err';
+      }
+      button.disabled = false;
+      return;
+    }
+    // No newsletter account yet: hand over to the visitor's email app.
+    window.location.href = `mailto:o.snijders.os@gmail.com?subject=${encodeURIComponent('ReturnGuard early access')}&body=${encodeURIComponent(`Please add ${email} to the early-access list.`)}`;
+    note.textContent = 'Thanks! Just press send in your email app.'; note.className = 'signup-note ok';
+    button.disabled = false; track('Signup');
   });
 });
