@@ -118,7 +118,7 @@ section { padding: 96px 0; }
 .feature ul { padding-left: 0; list-style: none; margin: 18px 0 0; }
 .feature li { padding-left: 30px; position: relative; margin-bottom: 10px; color: var(--slate); }
 .feature li::before { content: ''; position: absolute; left: 0; top: 5px; width: 18px; height: 18px; border-radius: 50%; background: var(--green-tint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23047857' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center/12px no-repeat; }
-.report-shot { width: 420px; border-radius: 12px; box-shadow: var(--shadow); border: 1px solid var(--line); }
+.report-shot { width: 420px; height: auto; max-height: 480px; object-fit: cover; object-position: top; border-radius: 12px; box-shadow: var(--shadow); border: 1px solid var(--line); -webkit-mask-image: linear-gradient(#000 78%, transparent); mask-image: linear-gradient(#000 78%, transparent); }
 
 /* Cards */
 .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
@@ -209,6 +209,6 @@ footer .legal { grid-column: 1 / -1; border-top: 1px solid #1e293b; padding-top:
   body { font-size: 16px; }
   .hero-phones { height: 440px; }
   .hero-phones .phone { width: 180px; }
-  .report-shot { width: 100%; }
+  .report-shot { width: 100%; max-height: 400px; }
   table.compare th:not(:first-child), table.compare td:not(:first-child) { width: 70px; }
 }
