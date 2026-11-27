@@ -283,6 +283,7 @@ section { padding: 112px 0; }
 .plan li { padding: 8px 0 8px 32px; position: relative; color: var(--slate); }
 .plan li::before { content: ''; position: absolute; left: 0; top: 11px; width: 20px; height: 20px; border-radius: 50%; background: var(--green-tint) var(--tick) center/12px no-repeat; }
 .plan .btn { width: 100%; }
+.plans-single { grid-template-columns: minmax(0, 440px); }
 .fineprint { color: var(--muted); font-size: .88rem; margin-top: 24px; }
 table.compare { width: 100%; border-collapse: collapse; margin-top: 24px; font-size: .97rem; }
 table.compare th, table.compare td { padding: 14px 12px; border-bottom: 1px solid var(--line); text-align: left; }
